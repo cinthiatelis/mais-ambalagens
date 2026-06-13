@@ -41,7 +41,7 @@ st.markdown("""
     h1, h2, h3 { color: white !important; }
     div[data-baseweb="select"] { background-color: #13315C; }
     </style>
-""", unsafe_allowed_index=True)
+""", unsafe_allowed_html=True)
 
 # Título do Sistema
 st.title("MAIS EMBALAGENS +")
@@ -60,7 +60,7 @@ with aba_cadastro:
     campo_data = st.date_input("Data do Lançamento:", datetime.now())
     campo_desc = st.text_input("Descrição / Fornecedor:")
     campo_cat = st.selectbox("Categoria:", ["Mercadoria", "Logística", "Infraestrutura", "Funcionários", "Limpeza", "Outros"])
-    campo_valor = ft_valor = st.number_input("Valor da Despesa (R$):", min_value=0.0, step=1.0, format="%.2f")
+    campo_valor = st.number_input("Valor da Despesa (R$):", min_value=0.0, step=1.0, format="%.2f")
 
     if st.button("SALVAR NO BANCO DE DADOS"):
         if campo_desc and campo_valor > 0:
