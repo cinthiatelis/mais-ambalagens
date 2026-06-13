@@ -41,7 +41,7 @@ st.markdown("""
     h1, h2, h3 { color: white !important; }
     div[data-baseweb="select"] { background-color: #13315C; }
     </style>
-""", unsafe_allowed_html=True)
+""", unsafe_allow_html=True)
 
 # Título do Sistema
 st.title("MAIS EMBALAGENS +")
@@ -107,3 +107,4 @@ with aba_historico:
         st.dataframe(df_filtrado.drop(columns=['Mês/Ano']), use_container_width=True)
     else:
         st.info("O banco de dados ainda está vazio. Faça o seu primeiro lançamento!")
+
