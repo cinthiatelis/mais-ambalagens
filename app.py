@@ -24,71 +24,70 @@ def conectar_banco():
 conexao = conectar_banco()
 
 # ==========================================
-# 2. DESIGN PREMIUM - VERSÃO FUNDO CLARO
+# 2. DESIGN PREMIUM - FORÇANDO MODO CLARO (LIGHT)
 # ==========================================
 st.set_page_config(page_title="Mais Embalagens - Gestão", page_icon="📦", layout="centered")
 
-# Visual Limpo e Profissional (Light Mode) baseado na nova logo
+# CSS Avançado para forçar fundo branco e textos escuros em qualquer celular
 st.markdown("""
     <style>
-    /* Fundo principal claro */
-    .main { 
-        background-color: #F8FAFC; 
-        color: #1E293B; 
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* Força o fundo de toda a aplicação a ficar branco/claro */
+    .stApp, .main, [data-testid="stAppViewContainer"] { 
+        background-color: #FFFFFF !important; 
+        color: #1E293B !important; 
+    }
+    
+    /* Força todos os textos normais e parágrafos a ficarem escuros */
+    p, span, div, h1, h2, h3, h4, h5, h6 {
+        color: #1E293B !important;
     }
     
     /* Botão Salvar Vermelho Original da Logo */
     .stButton>button { 
-        background-color: #EE1D23; 
-        color: white; 
-        font-weight: bold; 
-        font-size: 16px;
-        width: 100%; 
-        border-radius: 10px; 
-        border: none;
-        padding: 12px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-        transition: 0.3s;
+        background-color: #EE1D23 !important; 
+        color: white !important; 
+        font-weight: bold !important; 
+        font-size: 16px !important;
+        width: 100% !important; 
+        border-radius: 10px !important; 
+        border: none !important;
+        padding: 12px !important;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
     }
-    .stButton>button:hover { 
-        background-color: #B31217; 
-        color: white; 
-        transform: scale(1.01);
+    .stButton>button p {
+        color: white !important;
     }
     
-    /* Estilização das caixas de entrada (inputs) */
-    div[data-baseweb="input"], div[data-baseweb="select"], div[data-baseweb="popover"] {
+    /* Caixas de entrada (Inputs) com fundo cinza bem claro e borda visível */
+    div[data-baseweb="input"], div[data-baseweb="select"], div[data-baseweb="popover"], input {
         border-radius: 8px !important;
-        background-color: #FFFFFF !important;
+        background-color: #F1F5F9 !important;
+        color: #1E293B !important;
         border: 1px solid #CBD5E1 !important;
     }
     
-    /* Texto das caixas de entrada */
-    input {
-        color: #1E293B !important;
-    }
-    
-    /* Títulos dos campos em Azul Escuro */
+    /* Títulos dos campos acima das caixas */
     label p {
         color: #0B2545 !important; 
         font-weight: bold !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
     }
     
-    /* Customização das Abas */
-    .stTabs [data-baseweb="tab"] {
+    /* Customização das Abas (Nomes legíveis) */
+    .stTabs [data-baseweb="tab"] p {
         color: #64748B !important;
-        font-weight: bold;
+        font-weight: bold !important;
+    }
+    .stTabs [aria-selected="true"] p {
+        color: #0B2545 !important;
     }
     .stTabs [aria-selected="true"] {
-        color: #0B2545 !important;
         border-bottom-color: #EE1D23 !important;
     }
     
-    /* Linha divisória */
-    hr {
-        border-color: #E2E8F0 !important;
+    /* Tabelas com fundo claro */
+    div[data-testid="stDataFrame"] {
+        background-color: #FFFFFF !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -97,7 +96,7 @@ st.markdown("""
 try:
     st.image("304484.png", use_container_width=True)
 except:
-    st.markdown("<h1 style='color: #0B2545; text-align: center;'>MAIS EMBALAGENS +</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #0B2545; text-align: center; font-family: Arial;'>MAIS EMBALAGENS +</h1>", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -108,9 +107,8 @@ aba_cadastro, aba_historico = st.tabs(["📝 Novo Lançamento Diário", "📊 Vi
 # 3. ABA DE LANÇAMENTOS
 # ==========================================
 with aba_cadastro:
-    st.markdown("<h3 style='color: #0B2545;'>📥 Cadastrar Saída</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #0B2545; font-family: Arial;'>📥 Cadastrar Saída</h3>", unsafe_allow_html=True)
     
-    # Data no padrão brasileiro
     campo_data = st.date_input(
         "Data do Gasto:", 
         value=datetime.now(), 
@@ -119,7 +117,6 @@ with aba_cadastro:
     
     campo_desc = st.text_input("Descrição / Fornecedor / Destino:", placeholder="Ex: Compra de bobinas plásticas")
     
-    # Categorias solicitadas incluídas
     categorias_lista = ["Mercadoria", "Logística", "Deslocamento", "Pessoal", "Infraestrutura", "Funcionários", "Limpeza", "Outros"]
     campo_cat = st.selectbox("Categoria do Gasto:", categorias_lista)
     
@@ -142,7 +139,7 @@ with aba_cadastro:
 # 4. ABA DE HISTÓRICO E VISÃO MENSAL
 # ==========================================
 with aba_historico:
-    st.markdown("<h3 style='color: #0B2545;'>🔍 Histórico de Lançamentos</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #0B2545; font-family: Arial;'>🔍 Histórico de Lançamentos</h3>", unsafe_allow_html=True)
     
     df = pd.read_sql_query("SELECT data as 'Data', descricao as 'Descrição', categoria as 'Categoria', valor as 'Valor (R$)' FROM despesas ORDER BY id DESC", conexao)
     
@@ -159,7 +156,6 @@ with aba_historico:
 
         total_gasto = df_filtrado['Valor (R$)'].sum()
         
-        # Destaque do valor total em azul escuro da marca
         st.metric(
             label=f"Total Acumulado ({filtro_mes})", 
             value=f"R$ {total_gasto:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
