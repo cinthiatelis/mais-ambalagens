@@ -24,21 +24,21 @@ def conectar_banco():
 conexao = conectar_banco()
 
 # ==========================================
-# 2. DESIGN PREMIUM E IDENTIDADE VISUAL
+# 2. DESIGN PREMIUM - VERSÃO FUNDO CLARO
 # ==========================================
 st.set_page_config(page_title="Mais Embalagens - Gestão", page_icon="📦", layout="centered")
 
-# Visual totalmente personalizado com as cores da logo 291246_2.png
+# Visual Limpo e Profissional (Light Mode) baseado na nova logo
 st.markdown("""
     <style>
-    /* Fundo principal azul escuro */
+    /* Fundo principal claro */
     .main { 
-        background-color: #0B2545; 
-        color: #FFFFFF; 
+        background-color: #F8FAFC; 
+        color: #1E293B; 
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     
-    /* Botão Salvar Vermelho Premium */
+    /* Botão Salvar Vermelho Original da Logo */
     .stButton>button { 
         background-color: #EE1D23; 
         color: white; 
@@ -48,47 +48,56 @@ st.markdown("""
         border-radius: 10px; 
         border: none;
         padding: 12px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
         transition: 0.3s;
     }
     .stButton>button:hover { 
         background-color: #B31217; 
         color: white; 
-        transform: scale(1.02);
+        transform: scale(1.01);
     }
     
-    /* Estilização das caixas de texto e seleção */
+    /* Estilização das caixas de entrada (inputs) */
     div[data-baseweb="input"], div[data-baseweb="select"], div[data-baseweb="popover"] {
         border-radius: 8px !important;
-        background-color: #13315C !important;
-        border: 1px solid #1D3D6B !important;
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
     }
     
-    /* Cor dos textos das perguntas */
+    /* Texto das caixas de entrada */
+    input {
+        color: #1E293B !important;
+    }
+    
+    /* Títulos dos campos em Azul Escuro */
     label p {
-        color: #F4D03F !important; /* Detalhes em Amarelo */
+        color: #0B2545 !important; 
         font-weight: bold !important;
         font-size: 14px !important;
     }
     
-    /* Ajustes das abas */
+    /* Customização das Abas */
     .stTabs [data-baseweb="tab"] {
-        color: #FFFFFF !important;
+        color: #64748B !important;
         font-weight: bold;
     }
     .stTabs [aria-selected="true"] {
-        color: #F4D03F !important;
+        color: #0B2545 !important;
         border-bottom-color: #EE1D23 !important;
+    }
+    
+    /* Linha divisória */
+    hr {
+        border-color: #E2E8F0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Exibe a arte da empresa no topo se o arquivo estiver na pasta
+# Exibe a nova logo da empresa no topo
 try:
-    st.image("291246_2.png", use_container_width=True)
+    st.image("304484.png", use_container_width=True)
 except:
-    st.title("MAIS EMBALAGENS +")
-    st.subheader("Controle de Despesas")
+    st.markdown("<h1 style='color: #0B2545; text-align: center;'>MAIS EMBALAGENS +</h1>", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -96,12 +105,12 @@ st.markdown("---")
 aba_cadastro, aba_historico = st.tabs(["📝 Novo Lançamento Diário", "📊 Visão Mensal & Histórico"])
 
 # ==========================================
-# 3. ABA DE LANÇAMENTOS (Layout em cartões)
+# 3. ABA DE LANÇAMENTOS
 # ==========================================
 with aba_cadastro:
-    st.markdown("### 📥 Cadastrar Saída")
+    st.markdown("<h3 style='color: #0B2545;'>📥 Cadastrar Saída</h3>", unsafe_allow_html=True)
     
-    # Data no padrão brasileiro de exibição e calendário começando na segunda-feira
+    # Data no padrão brasileiro
     campo_data = st.date_input(
         "Data do Gasto:", 
         value=datetime.now(), 
@@ -110,13 +119,13 @@ with aba_cadastro:
     
     campo_desc = st.text_input("Descrição / Fornecedor / Destino:", placeholder="Ex: Compra de bobinas plásticas")
     
-    # Categorias atualizadas com Deslocamento e Pessoal
+    # Categorias solicitadas incluídas
     categorias_lista = ["Mercadoria", "Logística", "Deslocamento", "Pessoal", "Infraestrutura", "Funcionários", "Limpeza", "Outros"]
     campo_cat = st.selectbox("Categoria do Gasto:", categorias_lista)
     
     campo_valor = st.number_input("Valor total da Despesa (R$):", min_value=0.0, step=1.0, format="%.2f")
 
-    st.write("") # Espaçamento
+    st.write("") 
     if st.button("SALVAR NO BANCO DE DADOS"):
         if campo_desc and campo_valor > 0:
             cursor = conexao.cursor()
@@ -125,20 +134,19 @@ with aba_cadastro:
                 VALUES (?, ?, ?, ?)
             """, (campo_data.strftime("%d/%m/%Y"), campo_desc, campo_cat, campo_valor))
             conexao.commit()
-            st.success("Lançamento guardado com sucesso no banco de dados! 🎉")
+            st.success("Lançamento guardado com sucesso! 🎉")
         else:
-            st.error("Por favor, preencha a descrição e certifique-se de que o valor é maior que zero.")
+            st.error("Por favor, preencha a descrição e o valor corretamente.")
 
 # ==========================================
-# 4. ABA DE HISTÓRICO E VISÃO MENSAL PREMIUM
+# 4. ABA DE HISTÓRICO E VISÃO MENSAL
 # ==========================================
 with aba_historico:
-    st.markdown("### 🔍 Histórico de Lançamentos")
+    st.markdown("<h3 style='color: #0B2545;'>🔍 Histórico de Lançamentos</h3>", unsafe_allow_html=True)
     
     df = pd.read_sql_query("SELECT data as 'Data', descricao as 'Descrição', categoria as 'Categoria', valor as 'Valor (R$)' FROM despesas ORDER BY id DESC", conexao)
     
     if not df.empty:
-        # Cria a visão mensal pegando o mês/ano da data
         df['Mês/Ano'] = df['Data'].str[3:] 
         meses_salvos = sorted(df['Mês/Ano'].unique(), reverse=True)
         
@@ -151,14 +159,13 @@ with aba_historico:
 
         total_gasto = df_filtrado['Valor (R$)'].sum()
         
-        # Painel flutuante com o total acumulado do mês
+        # Destaque do valor total em azul escuro da marca
         st.metric(
             label=f"Total Acumulado ({filtro_mes})", 
             value=f"R$ {total_gasto:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         )
         
         st.write("")
-        # Mostra a tabela limpa
         st.dataframe(df_filtrado.drop(columns=['Mês/Ano']), use_container_width=True)
     else:
-        st.info("O banco de dados ainda está vazio. Faça o seu primeiro lançamento na aba ao lado!")
+        st.info("O banco de dados está vazio. Comece a lançar para ver o histórico!")
