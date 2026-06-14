@@ -24,14 +24,13 @@ def conectar_banco():
 conexao = conectar_banco()
 
 # ==========================================
-# 2. DESIGN PREMIUM - FORÇANDO MODO CLARO (LIGHT)
+# 2. DESIGN PREMIUM - LEITURA GARANTIDA
 # ==========================================
 st.set_page_config(page_title="Mais Embalagens - Gestão", page_icon="📦", layout="centered")
 
-# CSS Avançado para forçar fundo branco e textos escuros em qualquer celular
 st.markdown("""
     <style>
-    /* Força o fundo de toda a aplicação a ficar branco/claro */
+    /* Fundo principal claro */
     .stApp, .main, [data-testid="stAppViewContainer"] { 
         background-color: #FFFFFF !important; 
         color: #1E293B !important; 
@@ -42,7 +41,7 @@ st.markdown("""
         color: #1E293B !important;
     }
     
-    /* Botão Salvar Vermelho Original da Logo */
+    /* BOTÃO SALVAR VERMELHO PREMIUM */
     .stButton>button { 
         background-color: #EE1D23 !important; 
         color: white !important; 
@@ -58,22 +57,26 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Caixas de entrada (Inputs) com fundo cinza bem claro e borda visível */
-    div[data-baseweb="input"], div[data-baseweb="select"], div[data-baseweb="popover"], input {
+    /* CORREÇÃO DO MENU E CAIXAS DE SELEÇÃO (Contraste Máximo) */
+    /* Deixa as caixas de texto e o menu que desce escuros, mas força as letras a ficarem brancas */
+    div[data-baseweb="input"], div[data-baseweb="select"], div[data-baseweb="popover"], ul, li {
+        background-color: #1E293B !important;
         border-radius: 8px !important;
-        background-color: #F1F5F9 !important;
-        color: #1E293B !important;
-        border: 1px solid #CBD5E1 !important;
     }
     
-    /* Títulos dos campos acima das caixas */
+    /* Força a cor branca em TODAS as letras dentro das caixas e listas de seleção */
+    input, select, div[data-baseweb="select"] *, ul *, li * {
+        color: #FFFFFF !important;
+    }
+    
+    /* Títulos dos campos acima das caixas (Em Azul Escuro) */
     label p {
         color: #0B2545 !important; 
         font-weight: bold !important;
         font-size: 15px !important;
     }
     
-    /* Customização das Abas (Nomes legíveis) */
+    /* Customização das Abas */
     .stTabs [data-baseweb="tab"] p {
         color: #64748B !important;
         font-weight: bold !important;
@@ -92,7 +95,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Exibe a nova logo da empresa no topo
+# Exibe a logo da empresa no topo
 try:
     st.image("304484.png", use_container_width=True)
 except:
